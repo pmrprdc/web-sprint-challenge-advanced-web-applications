@@ -5,6 +5,7 @@ import LoginForm from './LoginForm'
 import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
+import axios from 'axios'
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
@@ -32,8 +33,23 @@ export default function App() {
   const login = ({ username, password }) => {
     // ✨ implement
     // We should flush the message state, turn on the spinner
+      setMessage("")
+      setSpinnerOn(true)
     // and launch a request to the proper endpoint.
-    // On success, we should set the token to local storage in a 'token' key,
+    axios.post("http://localhost:9000/api/login",{username: username,password: password})
+    .then(res=>{
+         // On success, we should set the token to local storage in a 'token' key,
+      localStorage.setItem('token', res.data.token)
+      console.log(localStorage.getItem('token'))
+      setMessage(res.data.message)
+      navigate("./articles")
+      setSpinnerOn(false)
+    }).catch(err=>{
+      console.log(err)
+      setSpinnerOn(false)
+      navigate("./")
+    })
+   
     // put the server success message in its proper state, and redirect
     // to the Articles screen. Don't forget to turn off the spinner!
   }
@@ -78,10 +94,10 @@ export default function App() {
           <NavLink id="articlesScreen" to="/articles">Articles</NavLink>
         </nav>
         <Routes>
-          <Route path="/" element={<LoginForm />} />
+          <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
-              <ArticleForm />
+              <ArticleForm />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
               <Articles />
             </>
           } />

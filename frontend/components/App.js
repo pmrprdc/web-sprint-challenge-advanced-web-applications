@@ -47,6 +47,7 @@ export default function App() {
     // We should flush the message state, turn on the spinner
       setMessage("")
       setSpinnerOn(true)
+     
     // and launch a request to the proper endpoint.
     axios.post("http://localhost:9000/api/login",{username: username,password: password})
     .then(res=>{
@@ -68,21 +69,16 @@ export default function App() {
 
   const getArticles = () => {
     // ✨ implement
-    // We should flush the message state, turn on the spinner
- 
-        setSpinnerOn(true)
+    // We should flush the message state, turn on the spinneR
     // and launch an authenticated request to the proper endpoint.
         axiosWithAuth().get("http://localhost:9000/api/articles").
         then(res=>{
-          console.log(res.data.articles)
-          setArticles(res.data.articles)
-          setSpinnerOn(false)
+         setArticles(res.data.articles)
+         console.log(articles)
         }).catch(err =>{
           console.log(err)
           
-         
-            console.log("error in getArticles")
-            setSpinnerOn(false)
+       
   })
     // On success, we should set the articles in their proper state and
     // put the server success message in its proper state.
@@ -124,7 +120,7 @@ export default function App() {
           <Route path="articles" element={
             <>
               <ArticleForm  />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-              <Articles articles={articles} getArticles={getArticles} />
+              <Articles articles={articles} getArticles={getArticles} deleteArticle={deleteArticle}  />
             </>
           } />
         </Routes>

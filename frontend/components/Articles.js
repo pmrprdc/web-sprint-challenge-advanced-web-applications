@@ -5,43 +5,16 @@ import axiosWithAuth from '../axios';
 export default function Articles(props) {
   // ✨ where are my props? Destructure them here
       const { getArticles, articles } = props;
-
+      
     
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
-    const art = [
-      {
-        "article_id": 1,
-        "title": "The Truth about Closures",
-        "text": "Closures exist in some languages",
-        "topic": "JavaScript"
-      },
-      {
-        "article_id": 2,
-        "title": "Mastering Hooks",
-        "text": "Prepare to read the docs",
-        "topic": "React"
-      },
-      {
-        "article_id": 3,
-        "title": "The Express Library",
-        "text": "Express is the Sinatra",
-        "topic": "Node"
-      }
-    ]
+  
+ 
   
   useEffect(() => {
-    axiosWithAuth().get("http://localhost:9000/api/articles").
-        then(res=>{
-          console.log(res.data.articles)
-          
-        }).catch(err =>{
-          console.log(err)
-          
-         
-            console.log("error in getArticles")
-           
-  })
+    getArticles();
+    
     // ✨ grab the articles here, on first render only
   },[])
 
@@ -51,9 +24,9 @@ export default function Articles(props) {
     <div className="articles">
       <h2>Articles</h2>
       {
-        ![art].length
+        ![articles].length
           ? 'No articles yet'
-          : art.map(art => {
+          : articles.map(art => {
             return (
               <div className="article" key={art.article_id}>
                 <div>

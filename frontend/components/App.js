@@ -68,15 +68,19 @@ export default function App() {
   }
 
   const getArticles = () => {
+        setMessage("");
+        setSpinnerOn(true)
     // ✨ implement
     // We should flush the message state, turn on the spinneR
     // and launch an authenticated request to the proper endpoint.
         axiosWithAuth().get("http://localhost:9000/api/articles").
         then(res=>{
          setArticles(res.data.articles)
+         setSpinnerOn(false)
          console.log(articles)
         }).catch(err =>{
-          console.log(err)
+          navigate("/")
+          setSpinnerOn(false)
           
        
   })

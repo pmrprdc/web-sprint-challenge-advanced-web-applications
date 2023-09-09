@@ -27,7 +27,7 @@ export default function App() {
       
       console.log("logout ran") 
       setMessage("GOODBYE")
-   
+      navigate("/")
     // ✨ implement
     // If a token is in local storage it should be removed,
       const token = localStorage.getItem('token')

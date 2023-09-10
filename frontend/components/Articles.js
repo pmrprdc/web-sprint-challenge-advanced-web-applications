@@ -4,7 +4,7 @@ import PT from 'prop-types'
 import axiosWithAuth from '../axios';
 export default function Articles(props) {
   // ✨ where are my props? Destructure them here
-      const { getArticles, articles } = props;
+      const { getArticles, articles, deleteArticle } = props;
       
     
   // ✨ implement conditional logic: if no token exists
@@ -17,6 +17,13 @@ export default function Articles(props) {
     
     // ✨ grab the articles here, on first render only
   },[])
+
+
+  const handleDelete = (e) => {
+    deleteArticle(e.target.id)
+    
+    
+  }
 
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
@@ -35,8 +42,8 @@ export default function Articles(props) {
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={true} onClick={Function.prototype}>Edit</button>
-                  <button disabled={true} onClick={Function.prototype}>Delete</button>
+                  <button disabled={false} onClick={Function.prototype}>Edit</button>
+                  <button id={art.article_id} disabled={false} onClick={handleDelete}>Delete</button>
                 </div>
               </div>
             )

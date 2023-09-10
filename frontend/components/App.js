@@ -115,12 +115,19 @@ export default function App() {
   }
 
   const updateArticle = ({ article_id, article }) => {
+
     // ✨ implement
     // You got this!
   }
 
   const deleteArticle = article_id => {
     // ✨ implement
+      axiosWithAuth().delete(`http://localhost:9000/api/articles/${article_id}`)
+      .then(res=>{
+        console.log(res.data)
+      }).catch(err=>{
+        console.log(err)
+      })
   }
 
   return (

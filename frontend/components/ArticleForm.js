@@ -38,6 +38,11 @@ export default function ArticleForm(props) {
     
   }
 
+  const handleDelete = () => {
+
+    setValues(initialFormValues)
+  }
+
   return (
     // ✨ fix the JSX: make the heading display either "Edit" or "Create"
     // and replace Function.prototype with the correct function
@@ -65,7 +70,7 @@ export default function ArticleForm(props) {
       </select>
       <div className="button-group">
         <button disabled={isDisabled()} id="submitArticle">Submit</button>
-        <button onClick={Function.prototype}>Cancel edit</button>
+        <button onClick={handleDelete}>Cancel edit</button>
       </div>
     </form>
   )

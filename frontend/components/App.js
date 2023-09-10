@@ -43,9 +43,13 @@ export default function App() {
   }
 
   const login = ({ username, password }) => {
+
     // ✨ implement
     // We should flush the message state, turn on the spinner
+
+
       setMessage("")
+
       setSpinnerOn(true)
      
     // and launch a request to the proper endpoint.
@@ -79,10 +83,9 @@ export default function App() {
          setSpinnerOn(false)
          console.log(articles)
         }).catch(err =>{
+          setMessage("Ouch: jwt expired")
           navigate("/")
           setSpinnerOn(false)
-          
-       
   })
     // On success, we should set the articles in their proper state and
     // put the server success message in its proper state.
@@ -91,7 +94,20 @@ export default function App() {
     // Don't forget to turn off the spinner!
   }
 
+
+
   const postArticle = article => {
+    axiosWithAuth().post("http://localhost:9000/api/articles", article).
+    then(res=>{
+     console.log(res.data.article)
+      setArticles([...articles, res.data.article])
+     console.log(articles)
+    }).catch(err =>{
+     
+     console.log(err)
+     
+})
+
     // ✨ implement
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
@@ -123,7 +139,7 @@ export default function App() {
           <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
-              <ArticleForm  />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+              <ArticleForm postArticle={postArticle} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
               <Articles articles={articles} getArticles={getArticles} deleteArticle={deleteArticle}  />
             </>
           } />

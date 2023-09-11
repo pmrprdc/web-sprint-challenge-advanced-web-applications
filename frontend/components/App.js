@@ -124,7 +124,17 @@ export default function App() {
     // ✨ implement
       axiosWithAuth().delete(`http://localhost:9000/api/articles/${article_id}`)
       .then(res=>{
+        console.log(article_id)
         console.log(res.data)
+        const articles1 = articles.filter(x=>{
+          console.log(x)
+          return x.article_id !== +article_id;
+        })
+
+        console.log(articles1)
+        setArticles(articles1)
+        console.log("filtered")
+
       }).catch(err=>{
         console.log(err)
       })

@@ -4,10 +4,12 @@ import PT from 'prop-types'
 const initialFormValues = { title: '', text: '', topic: '' }
 
 export default function ArticleForm(props) {
+ 
+ 
   const [values, setValues] = useState(initialFormValues)
   // ✨ where are my props? Destructure them here
 
-  const { postArticle } = props;
+  const { postArticle, articleFormValues, setArticleFormValues} = props;
 
 
 
@@ -20,13 +22,12 @@ export default function ArticleForm(props) {
 
   const onChange = evt => {
     const { id, value } = evt.target
-    setValues({ ...values, [id]: value })
+    setArticleFormValues({ ...articleFormValues, [id]: value })
   }
 
   const onSubmit = evt => {
     evt.preventDefault()
-
-    postArticle(values)
+    postArticle(articleFormValues)
     // ✨ implement
     // We must submit a new post or update an existing one,
     // depending on the truthyness of the `currentArticle` prop.
@@ -40,7 +41,7 @@ export default function ArticleForm(props) {
 
   const handleDelete = () => {
 
-    setValues(initialFormValues)
+    setArticleFormValues(initialFormValues)
   }
 
   return (
@@ -51,18 +52,18 @@ export default function ArticleForm(props) {
       <input
         maxLength={50}
         onChange={onChange}
-        value={values.title}
+        value={articleFormValues.title}
         placeholder="Enter title"
         id="title"
       />
       <textarea
         maxLength={200}
         onChange={onChange}
-        value={values.text}
+        value={articleFormValues.text}
         placeholder="Enter text"
         id="text"
       />
-      <select onChange={onChange} id="topic" value={values.topic}>
+      <select onChange={onChange} id="topic" value={articleFormValues.topic}>
         <option value="">-- Select topic --</option>
         <option value="JavaScript">JavaScript</option>
         <option value="React">React</option>
@@ -70,7 +71,7 @@ export default function ArticleForm(props) {
       </select>
       <div className="button-group">
         <button disabled={isDisabled()} id="submitArticle">Submit</button>
-        <button onClick={handleDelete}>Cancel edit</button>
+        <button disabled={isDisabled()} onClick={handleDelete}>Cancel edit</button>
       </div>
     </form>
   )

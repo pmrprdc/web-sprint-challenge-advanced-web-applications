@@ -25,6 +25,12 @@ export default function Articles(props) {
     
   }
 
+  const handleEdit = (e) => {
+    const {id} = e.target;
+    console.log(id)
+    
+  }
+
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
     // and use the articles prop to generate articles
@@ -42,7 +48,7 @@ export default function Articles(props) {
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={false} onClick={Function.prototype}>Edit</button>
+                  <button id={art.article_id} disabled={false} onClick={handleEdit}>Edit</button>
                   <button id={art.article_id} disabled={false} onClick={handleDelete}>Delete</button>
                 </div>
               </div>

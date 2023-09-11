@@ -10,12 +10,20 @@ import axiosWithAuth from '../axios/index'
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
 
+
+
+
+
 export default function App() {
+
+  const initialFormValues = { title: '', text: '', topic: '' }
+
   // ✨ MVP can be achieved with these states
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
   const [currentArticleId, setCurrentArticleId] = useState()
   const [spinnerOn, setSpinnerOn] = useState(false)
+  const [articleFormValues, setArticleFormValues] = useState(initialFormValues)
 
 
   // ✨ Research `useNavigate` in React Router v.6
@@ -46,10 +54,7 @@ export default function App() {
 
     // ✨ implement
     // We should flush the message state, turn on the spinner
-
-
       setMessage("")
-
       setSpinnerOn(true)
      
     // and launch a request to the proper endpoint.
@@ -81,7 +86,6 @@ export default function App() {
         then(res=>{
          setArticles(res.data.articles)
          setSpinnerOn(false)
-         console.log(articles)
         }).catch(err =>{
           setMessage("Ouch: jwt expired")
           navigate("/")
@@ -115,7 +119,16 @@ export default function App() {
   }
 
   const updateArticle = ({ article_id, article }) => {
+      
 
+    axios.put(`http://localhost:9000/api/articles/${article_id}`, article)
+    .then(res=>{
+      console.log(res)
+    }).catch(
+      err=>{
+        console.log(err)
+      }
+    )
     // ✨ implement
     // You got this!
   }
@@ -133,7 +146,7 @@ export default function App() {
 
         console.log(articles1)
         setArticles(articles1)
-        console.log("filtered")
+       
 
       }).catch(err=>{
         console.log(err)
@@ -156,8 +169,8 @@ export default function App() {
           <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
-              <ArticleForm postArticle={postArticle} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-              <Articles articles={articles} getArticles={getArticles} deleteArticle={deleteArticle}  />
+              <ArticleForm setArticleFormValues={setArticleFormValues} articleFormValues={articleFormValues} postArticle={postArticle} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+              <Articles updateArticle={updateArticle} articles={articles} getArticles={getArticles} deleteArticle={deleteArticle}  />
             </>
           } />
         </Routes>

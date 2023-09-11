@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import PT from 'prop-types'
 
-const initialFormValues = { title: '', text: '', topic: '' }
 
 export default function ArticleForm(props) {
  
- 
-  const [values, setValues] = useState(initialFormValues)
+  const initialFormValues = { title: '', text: '', topic: '' }
+
+
   // ✨ where are my props? Destructure them here
 
-  const { postArticle, articleFormValues, setArticleFormValues} = props;
+  const { postArticle, articleFormValues, setArticleFormValues, editMode} = props;
 
 
 
@@ -33,7 +33,12 @@ export default function ArticleForm(props) {
     // depending on the truthyness of the `currentArticle` prop.
   }
 
-  const isDisabled = () => {
+  const isDisabled = (mode) => {
+      if(mode) {
+        return true
+      } else {
+        return false;
+      }
     // ✨ implement
     // Make sure the inputs have some values
     
@@ -42,13 +47,14 @@ export default function ArticleForm(props) {
   const handleDelete = () => {
 
     setArticleFormValues(initialFormValues)
+    setEditMode(false)
   }
 
   return (
     // ✨ fix the JSX: make the heading display either "Edit" or "Create"
     // and replace Function.prototype with the correct function
     <form id="form" onSubmit={onSubmit}>
-      <h2>Create Article</h2>
+      <h2>{editMode ? "Edit" : "Create" } Article</h2>
       <input
         maxLength={50}
         onChange={onChange}
@@ -70,8 +76,8 @@ export default function ArticleForm(props) {
         <option value="Node">Node</option>
       </select>
       <div className="button-group">
-        <button disabled={isDisabled()} id="submitArticle">Submit</button>
-        <button disabled={isDisabled()} onClick={handleDelete}>Cancel edit</button>
+        <button disabled={isDisabled(editMode)} id="submitArticle">Submit</button>
+        {editMode &&<button disabled={isDisabled(!editMode)} onClick={handleDelete}>Cancel edit</button> }
       </div>
     </form>
   )

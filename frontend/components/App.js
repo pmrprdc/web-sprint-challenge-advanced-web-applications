@@ -21,7 +21,7 @@ export default function App() {
   // ✨ MVP can be achieved with these states
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
-  const [currentArticleId, setCurrentArticleId] = useState()
+  const [currentArticleId, setCurrentArticleId] = useState("")
   const [spinnerOn, setSpinnerOn] = useState(false)
   const [articleFormValues, setArticleFormValues] = useState(initialFormValues)
   const [editMode, setEditMode] = useState(false)
@@ -119,12 +119,26 @@ export default function App() {
     // to inspect the response from the server.
   }
 
-  const updateArticle = ({ article_id, article }) => {
-      
+  const updateArticle = (article_id, article ) => {
+    
 
-    axios.put(`http://localhost:9000/api/articles/${article_id}`, article)
+   
+    console.log("updateArticleRan")
+    console.log(article_id)
+    axiosWithAuth().put(`http://localhost:9000/api/articles/${article_id}`, article)
     .then(res=>{
-      console.log(res)
+      const updatedArticles = articles.map(art=>{
+       
+        if(art.article_id === +article_id) {
+          return res.data.article
+        } else {
+          return art
+        }
+      })
+      console.log(res.data.article)
+      console.log(updatedArticles)
+      setArticles(updatedArticles)
+      setArticleFormValues(initialFormValues)
     }).catch(
       err=>{
         console.log(err)
@@ -170,8 +184,8 @@ export default function App() {
           <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
-              <ArticleForm editMode={editMode} setArticleFormValues={setArticleFormValues} articleFormValues={articleFormValues} postArticle={postArticle} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-              <Articles setEditMode={setEditMode} setArticleFormValues={setArticleFormValues} articleFormValues={articleFormValues} updateArticle={updateArticle} articles={articles} getArticles={getArticles} deleteArticle={deleteArticle}  />
+              <ArticleForm currentArticleId={currentArticleId} setCurrentArticleId={setCurrentArticleId} updateArticle={updateArticle} editMode={editMode} setArticleFormValues={setArticleFormValues} articleFormValues={articleFormValues} postArticle={postArticle} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+              <Articles setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId} setEditMode={setEditMode} setArticleFormValues={setArticleFormValues} articleFormValues={articleFormValues} updateArticle={updateArticle} articles={articles} getArticles={getArticles} deleteArticle={deleteArticle}  />
             </>
           } />
         </Routes>

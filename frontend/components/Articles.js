@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import PT from 'prop-types'
 import axiosWithAuth from '../axios';
 export default function Articles(props) {
+  
   // ✨ where are my props? Destructure them here
-      const { getArticles, articles, deleteArticle, updateArticle, articleFormValues, setArticleFormValues, editMode, setEditMode } = props;
+      const { setCurrentArticleId, currentArticleId, getArticles, articles, deleteArticle, updateArticle, articleFormValues, setArticleFormValues, editMode, setEditMode } = props;
       
     
   // ✨ implement conditional logic: if no token exists
@@ -26,8 +27,11 @@ export default function Articles(props) {
   }
 
   const handleEdit = (e) => {
-    setEditMode(false)
+    setEditMode(true)
     const {id} = e.target;
+    console.log(id)
+    setCurrentArticleId(id)
+    console.log(currentArticleId)
     console.log(id)
     articles.map(x=>{
       console.log(x)
@@ -55,8 +59,8 @@ export default function Articles(props) {
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button id={art.article_id} disabled={!editMode} onClick={handleEdit}  id={art.article_id} >Edit</button>
-                  <button id={art.article_id} disabled={!editMode} onClick={()=>handleDelete}>Delete</button>
+                  <button id={art.article_id} disabled={editMode} onClick={handleEdit}  id={art.article_id} >Edit</button>
+                  <button id={art.article_id} disabled={editMode} onClick={handleDelete}>Delete</button>
                 </div>
               </div>
             )

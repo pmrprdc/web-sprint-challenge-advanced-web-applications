@@ -35,13 +35,13 @@ export default function App() {
   const logout = () => {
       
       console.log("logout ran") 
-      setMessage("GOODBYE")
+      setMessage("Goodbye!")
       navigate("/")
     // ✨ implement
     // If a token is in local storage it should be removed,
       const token = localStorage.getItem('token')
       if(token){
-        localStorage.clear();
+        localStorage.clear(token);
         console.log("cleared local storage")
       }
   

@@ -34,7 +34,6 @@ export default function Articles(props) {
     console.log(currentArticleId)
     console.log(id)
     articles.map(x=>{
-      console.log(x)
         if(+id === x.article_id){
           setArticleFormValues({title: x.title, text: x.text, topic:x.topic})
         }

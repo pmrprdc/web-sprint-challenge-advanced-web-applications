@@ -106,6 +106,8 @@ export default function App() {
     then(res=>{
      console.log(res.data.article)
       setArticles([...articles, res.data.article])
+      setArticleFormValues(initialFormValues)
+      setMessage('Here are your articles, Foo!')
      console.log(articles)
     }).catch(err =>{
      
@@ -184,7 +186,7 @@ export default function App() {
           <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
-              <ArticleForm currentArticleId={currentArticleId} setCurrentArticleId={setCurrentArticleId} updateArticle={updateArticle} editMode={editMode} setArticleFormValues={setArticleFormValues} articleFormValues={articleFormValues} postArticle={postArticle} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+              <ArticleForm setEditMode={setEditMode} editMode={editMode}  currentArticleId={currentArticleId} setCurrentArticleId={setCurrentArticleId} updateArticle={updateArticle}  setArticleFormValues={setArticleFormValues} articleFormValues={articleFormValues} postArticle={postArticle} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
               <Articles setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId} setEditMode={setEditMode} setArticleFormValues={setArticleFormValues} articleFormValues={articleFormValues} updateArticle={updateArticle} articles={articles} getArticles={getArticles} deleteArticle={deleteArticle}  />
             </>
           } />

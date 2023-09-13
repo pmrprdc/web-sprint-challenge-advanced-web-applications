@@ -9,7 +9,7 @@ export default function ArticleForm(props) {
 
   // ✨ where are my props? Destructure them here
 
-  const { currentArticleId, postArticle, articleFormValues, setArticleFormValues, editMode, updateArticle} = props;
+  const { currentArticleId, postArticle, articleFormValues, setArticleFormValues, editMode, updateArticle, setEditMode} = props;
 
 
 
@@ -29,10 +29,11 @@ export default function ArticleForm(props) {
     evt.preventDefault()
     if(!editMode){
     postArticle(articleFormValues)
+    console.log("posted new article")
     } else {
      console.log(articleFormValues, currentArticleId)
     updateArticle(currentArticleId,articleFormValues)
-      console.log("edited article sent to api")
+      console.log("edited existing article")
     }
     
     // ✨ implement
@@ -85,7 +86,7 @@ export default function ArticleForm(props) {
       </select>
       <div className="button-group">
         <button disabled={isDisabled(false)} id="submitArticle">Submit</button>
-        {editMode &&<button disabled={isDisabled(!editMode)} onClick={handleDelete}>Cancel edit</button> }
+        {editMode && <button disabled={isDisabled(!editMode)} onClick={handleDelete}>Cancel edit</button> }
       </div>
     </form>
   )

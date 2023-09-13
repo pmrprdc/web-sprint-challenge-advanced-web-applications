@@ -7,6 +7,7 @@ import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 import axios from 'axios'
 import axiosWithAuth from '../axios/index'
+import PrivateRoutes from '../utils/privateRoute'
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
 
@@ -63,7 +64,7 @@ export default function App() {
     .then(res=>{
          // On success, we should set the token to local storage in a 'token' key,
       localStorage.setItem('token', res.data.token)
-      console.log(`${localStorage.getItem('token')} was set as token `)
+    
       setMessage(res.data.message)
       navigate("./articles")
       setSpinnerOn(false)
@@ -105,11 +106,11 @@ export default function App() {
   const postArticle = article => {
     axiosWithAuth().post("http://localhost:9000/api/articles", article).
     then(res=>{
-     console.log(res.data.article)
+ 
       setArticles([...articles, res.data.article])
       setArticleFormValues(initialFormValues)
       setMessage('Here are your articles, Foo!')
-     console.log(articles)
+    
     }).catch(err =>{
      
      console.log(err)
@@ -126,7 +127,7 @@ export default function App() {
     
 
    
-    console.log("updateArticleRan")
+    
     console.log(article_id)
     axiosWithAuth().put(`http://localhost:9000/api/articles/${article_id}`, article)
     .then(res=>{
@@ -138,10 +139,10 @@ export default function App() {
           return art
         }
       })
-      console.log(res.data.article)
-      console.log(updatedArticles)
+     
       setArticles(updatedArticles)
       setArticleFormValues(initialFormValues)
+      setMessage("Nice update, Foo!")
     }).catch(
       err=>{
         console.log(err)
@@ -185,12 +186,20 @@ export default function App() {
         </nav>
         <Routes>
           <Route path="/" element={<LoginForm login={login} />} />
-          <Route path="articles" element={
+          <Route element={<PrivateRoutes/>}>
+              <Route path='/articles'element={
             <>
               <ArticleForm setEditMode={setEditMode} editMode={editMode}  currentArticleId={currentArticleId} setCurrentArticleId={setCurrentArticleId} updateArticle={updateArticle}  setArticleFormValues={setArticleFormValues} articleFormValues={articleFormValues} postArticle={postArticle} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
               <Articles setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId} setEditMode={setEditMode} setArticleFormValues={setArticleFormValues} articleFormValues={articleFormValues} updateArticle={updateArticle} articles={articles} getArticles={getArticles} deleteArticle={deleteArticle}  />
             </>
           } />
+             
+          </Route>
+
+
+
+
+          
         </Routes>
         <footer>Bloom Institute of Technology 2022</footer>
       </div>

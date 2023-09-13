@@ -86,6 +86,7 @@ export default function App() {
         axiosWithAuth().get("http://localhost:9000/api/articles").
         then(res=>{
          setArticles(res.data.articles)
+         setMessage(res.data.message)
          setSpinnerOn(false)
         }).catch(err =>{
           setMessage("Ouch: jwt expired")

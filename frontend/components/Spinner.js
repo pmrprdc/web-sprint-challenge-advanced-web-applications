@@ -21,12 +21,10 @@ const StyledSpinner = styled.div`
   }
 `
 
-export default function Spinner({ on }) {
-  
+export default function Spinner() {
 
-  if (on===false) return null
   return (
-    <StyledSpinner id="spinner">
+    <StyledSpinner data-testid="spinner" id="spinner">
       <h3>&nbsp;.</h3>&nbsp;&nbsp;&nbsp;Please wait...
     </StyledSpinner>
   )

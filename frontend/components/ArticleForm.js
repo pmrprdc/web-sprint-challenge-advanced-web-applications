@@ -29,12 +29,12 @@ export default function ArticleForm(props) {
     evt.preventDefault()
     if(!editMode){
     postArticle(articleFormValues)
-    setMessage("Here are your articles, Foo!")
-    console.log("posted new article")
+   
+    
     } else {
-     console.log(articleFormValues, currentArticleId)
+     
     updateArticle(currentArticleId,articleFormValues)
-      console.log("edited existing article")
+      
     }
     
     // ✨ implement
@@ -42,12 +42,13 @@ export default function ArticleForm(props) {
     // depending on the truthyness of the `currentArticle` prop.
   }
 
-  const isDisabled = (mode) => {
-      if(mode) {
-        return true
-      } else {
-        return false;
-      }
+  const isDisabled = () => {
+    const a = articleFormValues;
+    if  (a.title.trim().length >= 1
+    && a.text.trim().length >=1 ){
+      return false
+    }
+     return true
     // ✨ implement
     // Make sure the inputs have some values
     
@@ -86,7 +87,7 @@ export default function ArticleForm(props) {
         <option value="Node">Node</option>
       </select>
       <div className="button-group">
-        <button disabled={isDisabled(false)} id="submitArticle">Submit</button>
+        <button disabled={isDisabled()} id="submitArticle">Submit</button>
         {editMode && <button disabled={isDisabled(!editMode)} onClick={handleDelete}>Cancel edit</button> }
       </div>
     </form>

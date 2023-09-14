@@ -109,7 +109,7 @@ export default function App() {
  
       setArticles([...articles, res.data.article])
       setArticleFormValues(initialFormValues)
-      setMessage('Here are your articles, Foo!')
+      setMessage('Well done, Foo. Great article!')
     
     }).catch(err =>{
      
@@ -165,7 +165,7 @@ export default function App() {
 
         console.log(articles1)
         setArticles(articles1)
-       
+       setMessage(res.data.message)
 
       }).catch(err=>{
         console.log(err)
